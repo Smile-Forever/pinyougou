@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Smile
@@ -53,5 +54,23 @@ public class BrandController {
             e.printStackTrace();
             return new Result(true , "修改失败!");
         }
+    }
+    @RequestMapping("/delete")
+    public Result delete(Long[] ids){
+        try {
+            brandService.delete(ids);
+            return new Result(true , "删除成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true , "删除失败!");
+        }
+    }
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody TbBrand tbBrand , int page , int size){
+       return brandService.findPage(tbBrand , page , size);
+    }
+    @RequestMapping("/selectOptionList")
+    public List<Map> selectOptionList(){
+        return brandService.selectOptionList();
     }
 }
